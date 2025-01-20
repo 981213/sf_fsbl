@@ -8,7 +8,11 @@
 
 int main()
 {
-	soc_init();
+	int ret;
+
+	ret = soc_init();
+	if (ret)
+		return ret;
 
 	return 0;
 }
