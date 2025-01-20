@@ -1,0 +1,6 @@
+*.o
+/.vscode
+/fsbl.bin
+/fsbl.elf
+/fsbl.map
+/compile_commands.json
