@@ -7,6 +7,16 @@ OBJCOPY = $(CROSS_COMPILE)objcopy
 CFLAGS := -c -O2 -g -Iinclude -Ilibfdt -mcpu=c908 -mcmodel=medany -ffunction-sections -fdata-sections -mcmodel=medany
 
 SOC ?= sf21h8898
+DRAM_MBITS ?= 4096
+DRAM_TYPE ?= ddr3
+
+ifeq ($(DRAM_TYPE), ddr3)
+CFLAGS += -DDRAM_DDR3
+else
+CFLAGS += -DDRAM_DDR4
+endif
+
+CFLAGS += -DDRAM_MBITS=$(DRAM_MBITS)
 
 ifeq ($(SOC), sf21h8898)
 SOC := sf21
@@ -21,6 +31,7 @@ LDFLAGS := -nostdlib -nostartfiles -static -mcpu=c908 -T soc/$(SOC)/linker.ldS -
 
 CSOURCES := uart.c qspi.c crt.c main.c
 CSOURCES += $(wildcard soc/$(SOC)/*.c)
+CSOURCES += spi-nor.c
 
 ASOURCES := start.S
 
